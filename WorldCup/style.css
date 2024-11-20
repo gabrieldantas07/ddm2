@@ -1,0 +1,143 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #4a2f7d;
+    color: white;
+    line-height: 1.6;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Cabeçalho */
+header {
+    background-color: #562897;
+    color: #fff;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Layout de tabela */
+.tabela {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Permite que as colunas quebrem em múltiplas linhas em telas menores */
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    
+}
+
+/* Colunas das fases */
+.coluna {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    min-width: 120px; /* Evita que as colunas fiquem muito pequenas em telas pequenas */
+    padding: 10px;
+    max-width: 150px; /* Limita o tamanho máximo das colunas */
+    transition: transform 0.3s ease; /* Transição suave para o movimento das colunas */
+    padding-bottom: 20px;
+}
+
+/* Ajuste nas fases seguintes para centralizar os blocos */
+#16avos-esq, #16avos-dir {
+    flex: 1;
+}
+
+#oitavas-esq, #oitavas-dir {
+    flex: 1.5;
+    justify-content: center; /* Centraliza os blocos 2 e 3 na próxima fase */
+}
+
+#quartas-esq, #quartas-dir {
+    flex: 2; /* Ajusta para 2 blocos e centraliza com 2 e 3 da fase anterior */
+    justify-content: center; /* Centraliza */
+}
+
+#semi-esq, #semi-dir {
+    flex: 2.5; /* Ajusta mais para a centralização */
+    justify-content: center; /* Centraliza */
+}
+
+#final {
+    flex: 3; /* A final ocupa mais espaço e fica bem centralizada */
+}
+
+/* Jogo (div de cada jogo) */
+.jogo {
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px;
+    padding: 10px 15px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
+}
+
+/* Estilo do botão */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Rodapé */
+footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #ccc;
+    width: 100%;
+    text-align: center;
+}
+
+/* Estilo das imagens dos times */
+.time-imagem {
+    width: 40px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+    margin: 0 10px;
+}
+
+/* Estilo do confronto */
+.jogo {
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px;
+    padding: 10px 15px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
