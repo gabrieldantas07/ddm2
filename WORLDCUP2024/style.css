@@ -24,11 +24,12 @@ body {
 
 h1 {
   font-size: 1.5rem;
-  margin: 20px 0;
+  margin: 75px 0;
 }
 
 h2 {
   margin: 20px 0;
+  font-size: 1.5rem; 
 }
 
 button {
@@ -115,5 +116,7 @@ button:hover {
 }
 
 .list{
-  margin-top: 27%;
+  margin-top: 35%;
 }
+
+
