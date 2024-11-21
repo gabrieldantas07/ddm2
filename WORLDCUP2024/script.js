@@ -113,6 +113,11 @@ function advanceStage() {
   } else {
     const [score1, score2] = matches[0].result.split("x").map(Number);
     const winner = score1 > score2 ? matches[0].team1 : matches[0].team2;
+
+    document.getElementById("winner-flag").src = `img/${winner.toLowerCase().replace(/\s+/g, '-')}.png`;
+    champion.textContent = `CAMPEÃO: ${winner}`;
+
+
     matchScreen.classList.add("hidden");
     finalScreen.classList.remove("hidden");
     champion.textContent = `CAMPEÃO: ${winner}`;

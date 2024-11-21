@@ -119,4 +119,38 @@ button:hover {
   margin-top: 35%;
 }
 
+#winner-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* Espaço entre bandeira e taça */
+  margin: 20px 0;
+}
+
+.winner-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flag {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.trophy {
+  width: 100px;
+  height: auto;
+}
+
+#final-screen .controls button {
+  display: none;
+}
+
+#final-screen #restart {
+  display: inline-block;
+}
+
 
