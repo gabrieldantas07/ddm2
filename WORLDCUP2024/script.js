@@ -8,6 +8,7 @@ const teams = [
 let currentStage = "oitavas";
 let matches = [];
 let results = [];
+let simulationMode = "random"; // "random" ou "manual"
 
 // Seletores
 const homeScreen = document.getElementById("home-screen");
@@ -16,13 +17,16 @@ const finalScreen = document.getElementById("final-screen");
 const stageTitle = document.getElementById("stage-title");
 const matchesContainer = document.getElementById("matches");
 const champion = document.getElementById("champion");
+const winnerFlag = document.getElementById("winner-flag");
 
 document.getElementById("random-simulation").addEventListener("click", () => {
-  startSimulation("random");
+  simulationMode = "random";
+  startSimulation();
 });
 
 document.getElementById("manual-simulation").addEventListener("click", () => {
-  startSimulation("manual");
+  simulationMode = "manual";
+  startSimulation();
 });
 
 document.getElementById("simulate-games").addEventListener("click", simulateGames);
@@ -30,13 +34,13 @@ document.getElementById("advance").addEventListener("click", advanceStage);
 document.getElementById("reset").addEventListener("click", reset);
 document.getElementById("restart").addEventListener("click", reset);
 
-function startSimulation(mode) {
+function startSimulation() {
   homeScreen.classList.add("hidden");
   matchScreen.classList.remove("hidden");
-  createMatches(mode);
+  createMatches();
 }
 
-function createMatches(mode) {
+function createMatches() {
   matchesContainer.innerHTML = "";
   matches = [];
 
@@ -45,7 +49,7 @@ function createMatches(mode) {
     const match = {
       team1: shuffledTeams[i],
       team2: shuffledTeams[i + 1],
-      result: mode === "manual" ? null : generateResult()
+      result: simulationMode === "manual" ? null : generateResult()
     };
     matches.push(match);
 
@@ -56,12 +60,21 @@ function createMatches(mode) {
       <div class="team">
         <img src="img/${match.team1.toLowerCase().replace(/\s+/g, '-')}.png" alt="${match.team1}">
         <span>${match.team1}</span>
+        ${
+          simulationMode === "manual"
+            ? `<input type="number" min="0" id="score1-${i / 2}" class="score-input" />`
+            : `<span>${match.result?.split("x")[0] || "?"}</span>`
+        }
       </div>
-      <span id="result-${i / 2}">${match.result || "?"}</span>
+      <span>X</span>
       <div class="team">
+        ${
+          simulationMode === "manual"
+            ? `<input type="number" min="0" id="score2-${i / 2}" class="score-input" />`
+            : `<span>${match.result?.split("x")[1] || "?"}</span>`
+        }
         <span>${match.team2}</span>
         <img src="img/${match.team2.toLowerCase().replace(/\s+/g, '-')}.png" alt="${match.team2}">
-        
       </div>
     `;
     matchesContainer.appendChild(matchElement);
@@ -78,64 +91,79 @@ function updateStageTitle() {
 function generateResult() {
   let score1, score2;
   do {
-    score1 = Math.floor(Math.random() * 5);  // Garante que o placar seja entre 0 e 4
+    score1 = Math.floor(Math.random() * 5); // Gera entre 0 e 4
     score2 = Math.floor(Math.random() * 5);
-  } while (score1 === score2); // Evita empate no placar
+  } while (score1 === score2); // Evita empate
 
   return `${score1}x${score2}`;
 }
 
 function simulateGames() {
-  matches.forEach((match, index) => {
-    const result = generateResult(); // Gera um resultado sem empate
-    match.result = result;
+  if (simulationMode === "random") {
+    matches.forEach((match, index) => {
+      const result = generateResult();
+      match.result = result;
 
-    // Atualiza o placar na interface
-    document.getElementById(`result-${index}`).textContent = match.result;
-  });
+      const matchElement = matchesContainer.children[index];
+      matchElement.querySelector("span:nth-of-type(2)").textContent = result.split("x")[0];
+      matchElement.querySelector("span:nth-of-type(4)").textContent = result.split("x")[1];
+    });
+  }
 }
 
 function advanceStage() {
+  if (simulationMode === "manual") {
+    for (let i = 0; i < matches.length; i++) {
+      const score1 = parseInt(document.getElementById(`score1-${i}`).value) || 0;
+      const score2 = parseInt(document.getElementById(`score2-${i}`).value) || 0;
+
+      if (score1 === score2) {
+        alert("Empates não são permitidos. Ajuste o placar!");
+        return;
+      }
+      matches[i].result = `${score1}x${score2}`;
+    }
+  }
+
   results.push(...matches);
-  teams.length = 0; // Reseta os times para a próxima fase
+  teams.length = 0;
+
   matches.forEach(match => {
     const [score1, score2] = match.result.split("x").map(Number);
-    // Seleciona o time vencedor
     teams.push(score1 > score2 ? match.team1 : match.team2);
   });
 
-  if (currentStage === "oitavas") {
-    currentStage = "quartas";
-  } else if (currentStage === "quartas") {
-    currentStage = "semis";
-  } else if (currentStage === "semis") {
-    currentStage = "final";
-  } else {
-    const [score1, score2] = matches[0].result.split("x").map(Number);
-    const winner = score1 > score2 ? matches[0].team1 : matches[0].team2;
-
-    document.getElementById("winner-flag").src = `img/${winner.toLowerCase().replace(/\s+/g, '-')}.png`;
-    champion.textContent = `CAMPEÃO: ${winner}`;
-
-
+  if (teams.length === 1) {
+    const winner = teams[0];
     matchScreen.classList.add("hidden");
     finalScreen.classList.remove("hidden");
+    winnerFlag.src = `img/${winner.toLowerCase().replace(/\s+/g, '-')}.png`;
     champion.textContent = `CAMPEÃO: ${winner}`;
     return;
   }
-  createMatches("random");
+
+  currentStage =
+    currentStage === "oitavas"
+      ? "quartas"
+      : currentStage === "quartas"
+      ? "semis"
+      : "final";
+
+  createMatches();
 }
 
 function reset() {
   currentStage = "oitavas";
   results = [];
   teams.length = 0;
-  teams.push(...[
-    "Brasil", "Argentina", "Espanha", "Inglaterra",
-    "Holanda", "Portugal", "Alemanha", "Franca", 
-    "Japao", "Coreia", "Italia", "Senegal",
-    "Croacia", "Belgica", "Uruguai", "Mexico"
-  ]);
+  teams.push(
+    ...[
+      "Brasil", "Argentina", "Espanha", "Inglaterra",
+      "Holanda", "Portugal", "Alemanha", "Franca", 
+      "Japao", "Coreia", "Italia", "Senegal",
+      "Croacia", "Belgica", "Uruguai", "Mexico"
+    ]
+  );
   homeScreen.classList.remove("hidden");
   matchScreen.classList.add("hidden");
   finalScreen.classList.add("hidden");

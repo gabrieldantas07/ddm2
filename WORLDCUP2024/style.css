@@ -1,5 +1,3 @@
-
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -13,9 +11,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
-  
+  min-height: 100vh;
+  padding: 10px; /* Reduzido para telas menores */
 }
 
 .hidden {
@@ -23,22 +20,22 @@ body {
 }
 
 h1 {
-  font-size: 1.5rem;
-  margin: 75px 0;
+  font-size: 1.2rem; /* Tamanho menor para caber melhor */
+  margin: 50px 0; /* Espaçamento reduzido */
 }
 
 h2 {
-  margin: 20px 0;
-  font-size: 1.5rem; 
+  margin: 15px 0;
+  font-size: 1.2rem; /* Ajustado para telas pequenas */
 }
 
 button {
   background-color: #00A2FF;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 14px;
   color: white;
-  font-size: 1rem;
-  margin: 10px;
+  font-size: 0.9rem; /* Fonte reduzida */
+  margin: 10px 0; /* Melhor espaçamento em telas pequenas */
   border-radius: 5px;
   cursor: pointer;
 }
@@ -50,56 +47,54 @@ button:hover {
 #matches {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin: 20px 0;
+  gap: 15px; /* Espaço menor entre os jogos */
+  margin: 15px 0;
+  width: 100%; /* Adapta ao tamanho da tela */
 }
 
 .match {
-  
   background-color: #3C0077;
-  padding: 10px;
+  padding: 5px; /* Menor padding */
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px; /* Altura padronizada para os jogos */
-  width: 270px;  /* Largura padronizada para os jogos */
-  margin: 8px auto;
-  margin-bottom: 10px;  /* Garante um espaçamento entre os jogos */
-  padding-left: 20px; /* Ajuste para garantir que o conteúdo não fique encostado */
-  padding-right: 20px;
-  
+  height: auto;
+  width: 100%;
+  max-width: 280px; /* Reduz a largura */
+  margin: 5px auto; /* Ajuste menor entre os jogos */
 }
-
 
 .match .team {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+  flex-direction: column; /* Empilha bandeira e nome */
+  gap: 8px; /* Menor espaçamento entre itens */
 }
 
 .match img {
-  width: 25px;  /* Tamanho das bandeiras */
-  height: 18px;
-  margin-right: 8px;
+  width: 20px; /* Reduzido para caber melhor */
+  height: 15px;
+  margin-right: 5px;
 }
 
 .match span {
-  font-size: 1rem;
+  font-size: 0.8rem; /* Fonte menor */
+  text-align: center; /* Centraliza texto */
 }
 
 .team {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 .team img {
-  width: 40px;
-  height: 40px;
+  width: 30px; /* Reduzido para telas menores */
+  height: 30px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 #simulate-games, #advance, #reset {
@@ -111,20 +106,20 @@ button:hover {
 }
 
 .trophy {
-  width: 120px;
-  margin: 20px 0;
+  width: 100px; /* Reduzido para telas menores */
+  margin: 10px 0;
 }
 
-.list{
-  margin-top: 35%;
+.list {
+  margin-top: 20%; /* Melhor alinhamento em celulares */
 }
 
 #winner-display {
   display: flex;
+  flex-direction: column; /* Alinha verticalmente em telas pequenas */
   align-items: center;
-  justify-content: center;
-  gap: 20px; /* Espaço entre bandeira e taça */
-  margin: 20px 0;
+  gap: 10px; /* Espaço entre bandeira e taça */
+  margin: 15px 0;
 }
 
 .winner-info {
@@ -134,17 +129,17 @@ button:hover {
 }
 
 .flag {
-  width: 80px;
-  height: 80px;
+  width: 60px; /* Reduzido para telas menores */
+  height: 60px;
   border-radius: 5px;
   object-fit: cover;
-  margin: 20px;
+  margin: 15px;
 }
 
 .trophy {
-  width: 200px;
+  width: 150px; /* Reduzido */
   height: auto;
-  margin: 20px;
+  margin: 15px;
 }
 
 #final-screen .controls button {
@@ -155,4 +150,43 @@ button:hover {
   display: inline-block;
 }
 
+/* Adiciona responsividade */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1rem;
+  }
 
+  h2 {
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .match {
+    max-width: 300px;
+  }
+
+  .trophy {
+    width: 120px;
+  }
+
+  .flag {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.score-input {
+  width: 30px;
+  height: 25px;
+  font-size: 0.8rem;
+  
+  border: 1px solid #888;
+  border-radius: 3px;
+  background-color: #2C0059;
+  color: white;
+
+}
